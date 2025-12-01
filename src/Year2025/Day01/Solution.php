@@ -61,10 +61,11 @@ class Solution implements SolutionInterface
 
             $count += $withZeroClick ? $item->zeroClicks($cursor) : 0;
 
-            match ($item->direction) {
-                Directions::LEFT => $cursor = (($cursor - $item->amount ) % 100 + 100) % 100,
-                Directions::RIGHT => $cursor = ($cursor + $item->amount) % 100
+            $cursor = match ($item->direction) {
+                Directions::LEFT => (($cursor - $item->amount ) % 100 + 100) % 100,
+                Directions::RIGHT => ($cursor + $item->amount) % 100
             };
+
             if ($cursor == 0) {
                 $count++;
             }
