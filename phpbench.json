@@ -1,7 +1,7 @@
 {
     "$schema":"./vendor/phpbench/phpbench/phpbench.schema.json",
     "runner.bootstrap": "vendor/autoload.php",
-    "runner.file_pattern": "*Bench*.php",
+    "runner.file_pattern": "*Bench2025.php",
 
     "report.outputs": {
         "build-artifact": {

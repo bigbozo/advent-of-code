@@ -23,10 +23,11 @@ class MakeSolution extends Command
         $this->setDescription('Create a stub for day x of AdventOfCode')
             ->setName('generate')
             ->addArgument('day', InputArgument::REQUIRED, 'Day')
-            ->addArgument('year', InputArgument::OPTIONAL, 'Year', $_ENV['YEAR']);
+            ->addArgument('year', InputArgument::OPTIONAL, 'Year', $_ENV['YEAR'] ?? null);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
+
     {
 
         $this->day = (int)$input->getArgument('day');
