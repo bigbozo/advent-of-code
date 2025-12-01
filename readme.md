@@ -1,9 +1,9 @@
-# Advent of Code 2024
+# Advent of Code 2025
 
-https://adventofcode.com/2024/
+https://adventofcode.com/2025/
 
 ## Benchmarks
-[Apple Mac Mini M1](docs/benchmark.m1.md)
+[MacMini M4Pro 24G.md](docs/benchmark.MacMini%20M4Pro%2024G.md)
 
 ## Stub-Generator
 
@@ -15,10 +15,7 @@ https://adventofcode.com/2024/
     bin/aoc run <day> [<to_day>] 
     bin/aoc run <day> <year>
     bin/aoc run <day> <to_day> <year>
+
 ## Run Benchmarks
 
     bin/aoc bench
-
-### The tree of day 14
-
-![day14.7861.png](docs/day14.7861.png)
