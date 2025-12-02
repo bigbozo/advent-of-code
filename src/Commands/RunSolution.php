@@ -21,7 +21,7 @@ class RunSolution extends Command
             ->setName('run')
             ->addArgument('day', InputArgument::REQUIRED, 'Day')
             ->addArgument('to_day', InputArgument::OPTIONAL, ' to Day')
-            ->addArgument('year', InputArgument::OPTIONAL, ' year', $_ENV['YEAR']);
+            ->addArgument('year', InputArgument::OPTIONAL, ' year', $_ENV['YEAR'] ?? date('y'));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
