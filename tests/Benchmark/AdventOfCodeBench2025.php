@@ -43,4 +43,14 @@ class AdventOfCodeBench2025
             ->solve(file_get_contents($this->getInputFilename(2025, 3)));
     }
 
+
+    /**
+     * @Revs(1000)
+     */
+    public function benchDay04(): void
+    {
+        (new \Bizbozo\AdventOfCode\Year2025\Day04\Solution)
+            ->solve(file_get_contents($this->getInputFilename(2025, 4)));
+    }
+
 }
