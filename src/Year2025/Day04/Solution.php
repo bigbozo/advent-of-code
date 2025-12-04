@@ -21,7 +21,7 @@ class Solution implements SolutionInterface
 
     private function parseData(string $stream): array
     {
-        return array_map(fn($item) => str_split($item), explode(PHP_EOL, $stream));
+        return array_map('str_split', explode(PHP_EOL, $stream));
     }
 
     public function getTitle(): string
@@ -63,7 +63,7 @@ class Solution implements SolutionInterface
         $accessible = 0;
         foreach ($this->data as $x => $row) {
             foreach ($row as $y => $char) {
-                if ($this->get($x, $y) === '@') {
+                if ($char === '@') {
                     $neighbours = $this->countNeighbours($x, $y);
                     if ($neighbours < 4) {
                         $accessible += 1;
