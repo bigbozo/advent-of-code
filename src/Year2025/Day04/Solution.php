@@ -16,6 +16,8 @@ class Solution implements SolutionInterface
      * @var array|array[]
      */
     private array $data;
+    private int $width;
+    private int $height;
 
     private function parseData(string $stream): array
     {
@@ -34,6 +36,8 @@ class Solution implements SolutionInterface
         $data = static::parseData($inputStream);
 
         $this->data = $data;
+        $this->width = count($this->data);
+        $this->height = count($this->data[0]);
         $accessible = $this->getAccessibleRoles();
 
         $accessibleRoles = $accessible;
@@ -44,11 +48,12 @@ class Solution implements SolutionInterface
             $accessible = $this->getAccessibleRoles();
         }
 
+        $this->paint();
 
         return new SolutionResult(
             4,
-            new UnitResult("The 1st answer is %s", [$accessibleRoles]),
-            new UnitResult('The 2nd answer is %s', [$totalAccessibleRoles])
+            new UnitResult("There are %s paper-rolls accessible in the first round", [$accessibleRoles]),
+            new UnitResult('%s paper-rolls can be removed in total', [$totalAccessibleRoles])
         );
     }
 
@@ -56,8 +61,8 @@ class Solution implements SolutionInterface
     {
         $accessibleRemoved = $this->data;
         $accessible = 0;
-        foreach ($this->data as $x=>$row) {
-            foreach($row as $y => $char) {
+        foreach ($this->data as $x => $row) {
+            foreach ($row as $y => $char) {
                 if ($this->get($x, $y) === '@') {
                     $neighbours = $this->countNeighbours($x, $y);
                     if ($neighbours < 4) {
@@ -96,5 +101,20 @@ class Solution implements SolutionInterface
         return '-';
     }
 
+    public function paint(): void
+    {
+        $img = imagecreate($this->width, $this->height);
+        $bg = imagecolorallocate($img, 0, 0, 0);
+        $green = imagecolorallocate($img, 0, 255, 0);
+        foreach ($this->data as $x => $row) {
+            foreach ($row as $y => $char) {
+                if ($this->get($x, $y) === '@') {
+                    imagesetpixel($img, $x, $y, $green);
+                }
+            }
+        }
+        if (!is_dir('out')) mkdir('out');
+        imagepng($img, "docs/2025-04-paperrolls.png");
+    }
 
 }

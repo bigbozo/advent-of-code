@@ -22,3 +22,7 @@ Set `YEAR` for year and `MACHINE` for your machine (used in naming benchmark-fil
 ## Run Benchmarks
 
     bin/aoc bench
+
+### the hall of unaccessible Paperrolls
+
+![2025-04-paperrolls.png](docs/2025-04-paperrolls.png)

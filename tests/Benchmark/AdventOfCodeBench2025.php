@@ -15,7 +15,7 @@ class AdventOfCodeBench2025
 
 
     /**
-     * @Revs(1000)
+     * @Revs(100)
      */
     public function benchDay01(): void
     {
@@ -35,7 +35,7 @@ class AdventOfCodeBench2025
 
 
     /**
-     * @Revs(1000)
+     * @Revs(100)
      */
     public function benchDay03(): void
     {
@@ -45,7 +45,7 @@ class AdventOfCodeBench2025
 
 
     /**
-     * @Revs(1000)
+     * @Revs(3)
      */
     public function benchDay04(): void
     {
