@@ -73,6 +73,11 @@ class Range
         return $diff ?? null;
     }
 
+    public function size()
+    {
+        return $this->end - $this->start + 1;
+    }
+
     public function shift(mixed $offset)
     {
         return new self(
