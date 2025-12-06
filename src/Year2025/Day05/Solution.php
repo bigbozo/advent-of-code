@@ -12,7 +12,7 @@ class Solution implements SolutionInterface
 
     private function parseData(string $stream): array
     {
-        list($ranges, $numbers) = explode(PHP_EOL . PHP_EOL, $stream);
+        [$ranges, $numbers] = explode(PHP_EOL . PHP_EOL, $stream);
 
         return [
             array_map(fn($item) => explode('-', $item), explode(PHP_EOL, $ranges)),
@@ -31,21 +31,23 @@ class Solution implements SolutionInterface
 
         [$ranges, $ingredientIds] = static::parseData($inputStream);
 
-        $freshIngredients = 0;
-        foreach ($ingredientIds as $id) {
+        $freshIngredients = $this->getFreshIngredientCount($ingredientIds, $ranges);
 
-            foreach ($ranges as $range) {
-                if ($id >= $range[0] && $id <= $range[1]) {
-                    $freshIngredients++;
-                    break;
-                }
-            }
-        }
+        $numberOfFreshIngredientIds = $this->getFreshIngredientIdCount($ranges);
 
+        return new SolutionResult(
+            5,
+            new UnitResult("%s ingredients are fresh", [$freshIngredients]),
+            new UnitResult('%s ids are considered fresh', [$numberOfFreshIngredientIds])
+        );
+    }
+
+    public function getFreshIngredientIdCount(mixed $ranges): int
+    {
+        $numberOfFreshIngredientIds = 0;
         usort($ranges, fn($a, $b) => $a[0] <=> $b[0]);
 
         $rightBound = 0;
-        $numberOfFreshIngredientIds = 0;
 
         foreach ($ranges as $range) {
 
@@ -60,11 +62,21 @@ class Solution implements SolutionInterface
             $rightBound = $range[1];
 
         }
+        return $numberOfFreshIngredientIds;
+    }
 
-        return new SolutionResult(
-            5,
-            new UnitResult("%s ingredients are fresh", [$freshIngredients]),
-            new UnitResult('%s ids are considered fresh', [$numberOfFreshIngredientIds])
-        );
+    public function getFreshIngredientCount(mixed $ingredientIds, mixed $ranges): int
+    {
+        $freshIngredients = 0;
+
+        foreach ($ingredientIds as $id) {
+            foreach ($ranges as $range) {
+                if ($id >= $range[0] && $id <= $range[1]) {
+                    $freshIngredients++;
+                    break;
+                }
+            }
+        }
+        return $freshIngredients;
     }
 }
