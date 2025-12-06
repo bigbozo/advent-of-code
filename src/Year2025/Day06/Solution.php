@@ -45,31 +45,41 @@ class Solution implements SolutionInterface
             $operators = array_pop($lines);
         }
 
-        if (preg_match_all('/((\+|\*)\s+)/', $operators . ' ', $matches)) {
-            $start = 0;
-            $operators = [];
-            $columns = [];
-
-            foreach ($matches[1] as $columnKey => $column) {
-                $operators[] = $matches[2][$columnKey];
-                $length = strlen($column)-1;
-                $numberBlock = array_map(fn($line) => rtrim(substr($line, $start, $length)), $lines);
-                $finalNumbers = array_fill(0, $length, 0);
-                for ($i = 0; $i < $length ; $i++) {
-                    foreach ($numberBlock as $number) {
-                        $digit = intval(substr($number, $i, 1));
-                        if ($digit) {
-                            $finalNumbers[$i] = $finalNumbers[$i] * 10 + $digit;
-                        }
-                    }
-                }
-                $columns[] = $finalNumbers;
-                $start += $length + 1;
-
-            }
-            return [$operators, $columns];
+        if (!preg_match_all('/((\+|\*)\s+)/', $operators . ' ', $matches)) {
+            throw new \Exception('Data format erroneous.');
         }
-        throw new \Exception('Data format erroneous.');
+
+        $start = 0;
+        $operators = [];
+        $columns = [];
+
+        foreach ($matches[1] as $columnKey => $column) {
+
+            $operators[] = $matches[2][$columnKey];
+            $length = strlen($column) - 1;
+            $numberBlock = array_map(fn($line) => rtrim(substr($line, $start, $length)), $lines);
+
+            $columns[] = $this->rotateBlock($length, $numberBlock);
+
+            $start += $length + 1;
+
+        }
+        return [$operators, $columns];
+
+    }
+
+    private function rotateBlock(int $length, array $numberBlock): array
+    {
+        $finalNumbers = array_fill(0, $length, 0);
+        for ($i = 0; $i < $length; $i++) {
+            foreach ($numberBlock as $number) {
+                $digit = intval(substr($number, $i, 1));
+                if ($digit) {
+                    $finalNumbers[$i] = $finalNumbers[$i] * 10 + $digit;
+                }
+            }
+        }
+        return $finalNumbers;
     }
 
     public function getTitle(): string
@@ -108,4 +118,5 @@ class Solution implements SolutionInterface
         }
         return $grandTotal;
     }
+
 }
