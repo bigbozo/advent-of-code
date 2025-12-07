@@ -14,10 +14,17 @@ class Solution implements SolutionInterface
 
     /** @var array<string,int> */
     private array $cache;
+    private int $start;
 
     private function parseData(string $stream)
     {
-        return array_map('str_split', explode(PHP_EOL, $stream));
+        // put stream into matrix
+        $lines = array_map('str_split', explode(PHP_EOL, $stream));
+        // find start
+        $this->start = array_search('S', $lines[0]);
+        // remove noise
+        $this->lines = array_values(array_filter($lines, fn($item) => array_search('^', $item) !== false));
+
     }
 
     public function getTitle(): string
@@ -29,44 +36,28 @@ class Solution implements SolutionInterface
     public function solve(string $inputStream, ?string $inputStream2 = null): SolutionResult
     {
 
-        $lines = static::parseData($inputStream);
-
-        $splits = $this->getNumberOfSplits($lines);
-
-        $start = array_search('S', $lines[0]);
-        $this->lines = array_values(array_filter($lines, fn($item) => array_search('^', $item) !== false));
-
-        $numOfTimelines = $this->getNumberOfTimelines($start, 0);
-
+        static::parseData($inputStream);
 
         return new SolutionResult(
             7,
-            new UnitResult("The beam will be split %s times", [$splits]),
-            new UnitResult('A single Tachyon ends on %s timelines', [$numOfTimelines])
+            new UnitResult("The beam will be split %s times", [$this->getNumberOfSplits()]),
+            new UnitResult('A single Tachyon ends on %s timelines', [$this->getNumberOfTimelines($this->start, 0)])
         );
     }
 
-    public function getNumberOfSplits(array $lines): int
+    public function getNumberOfSplits(): int
     {
         $splits = 0;
-        $activeColumns = [];
-        foreach ($lines as $line) {
+        $activeColumns = [$this->start => true];
+        foreach ($this->lines as $line) {
             $activeColumnsNext = $activeColumns;
             foreach ($line as $column => $char) {
-                switch ($char) {
-                    case 'S':
-                        $activeColumnsNext[$column] = true;
-                        break;
-                    case '^':
-                        if ($activeColumns[$column] ?? false) {
-                            $activeColumnsNext[$column - 1] = true;
-                            $activeColumnsNext[$column + 1] = true;
-                            $activeColumnsNext[$column] = false;
-                            $splits++;
-                        };
-                        break;
-
-                }
+                if ($char === '^' && ($activeColumns[$column] ?? false)) {
+                    $activeColumnsNext[$column - 1] = true;
+                    $activeColumnsNext[$column + 1] = true;
+                    $activeColumnsNext[$column] = false;
+                    $splits++;
+                };
             }
 
             $activeColumns = $activeColumnsNext;
