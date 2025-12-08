@@ -20,13 +20,12 @@ class Solution implements SolutionInterface
     {
 
         $points = static::parseData($inputStream);
-        $points2 = array_map(fn ($item) => clone $item, $points);
 
         $connections = $this->calculateConnections($points);
         return new SolutionResult(
             8,
             new UnitResult("The 1st answer is %s", [$this->threeCircuitsProduct($points, $connections)]),
-            new UnitResult('The 2nd answer is %s', [$this->wallDistance($points2, $connections)])
+            new UnitResult('The 2nd answer is %s', [$this->wallDistance($points, $connections)])
         );
     }
 
