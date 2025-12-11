@@ -95,7 +95,7 @@ class AdventOfCodeBench2025
 
 
     /**
-     * @Revs(1)
+     * @Revs(0)
      */
     public function benchDay09(): void
     {
@@ -105,12 +105,22 @@ class AdventOfCodeBench2025
 
 
     /**
-     * @Revs(1000)
+     * @Revs(100)
      */
     public function benchDay10(): void
     {
         (new \Bizbozo\AdventOfCode\Year2025\Day10\Solution)
             ->solve(file_get_contents($this->getInputFilename(2025, 10)));
+    }
+
+
+    /**
+     * @Revs(1000)
+     */
+    public function benchDay11(): void
+    {
+        (new \Bizbozo\AdventOfCode\Year2025\Day11\Solution)
+            ->solve(file_get_contents($this->getInputFilename(2025, 11)));
     }
 
 }

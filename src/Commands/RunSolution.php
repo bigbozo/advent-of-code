@@ -52,6 +52,7 @@ class RunSolution extends Command
                     $solution->solve(file_get_contents($testInputFilenames[0]))->output('TEST');
                 }
             }
+            $solution = new $class;
             if (file_exists($inputFilename)) {
                 $solution->solve(file_get_contents($inputFilename))->output('LIVE');
             }
