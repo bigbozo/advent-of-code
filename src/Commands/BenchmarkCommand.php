@@ -25,7 +25,8 @@ class BenchmarkCommand extends Command
         $fh = fopen($csvFilePath, "r");
         $rows = [];
         $widths = [];
-        while ($row = fgetcsv($fh, 4096)) {
+        /** @noinspection PhpDeprecatedPassingNonEmptyEscapeToCsvFunctionInspection */
+        while ($row = fgetcsv($fh, 4096, escape: '\\')) {
             if (!count($widths)) $widths = array_fill(0, count($row), 0);
             foreach ($row as $col => &$item) {
                 if (is_numeric($item)) $item = number_format(round($item, 2), 2);
