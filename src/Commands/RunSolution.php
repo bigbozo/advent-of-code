@@ -42,6 +42,7 @@ class RunSolution extends Command
 
             /** @var SolutionInterface $solution */
             $solution = new $class;
+            $solution->setStyle($style);
 
 
             $style->section(chop($solution->getTitle()));
@@ -53,8 +54,9 @@ class RunSolution extends Command
                 }
             }
             $solution = new $class;
+            $solution->setStyle($style);
             if (file_exists($inputFilename)) {
-                $solution->solve(file_get_contents($inputFilename))->output('LIVE');
+                $solution->solve(file_get_contents($inputFilename),isTest: false)->output('LIVE');
             }
             $style->section('');
         }

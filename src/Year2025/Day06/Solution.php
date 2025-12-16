@@ -2,12 +2,12 @@
 
 namespace Bizbozo\AdventOfCode\Year2025\Day06;
 
-use Bizbozo\AdventOfCode\Solutions\SolutionInterface;
+use Bizbozo\AdventOfCode\Solutions\AbstractSolution;
 use Bizbozo\AdventOfCode\Solutions\SolutionResult;
 use Bizbozo\AdventOfCode\Solutions\UnitResult;
 use Override;
 
-class Solution implements SolutionInterface
+class Solution extends AbstractSolution
 {
 
     private function parseData(string $stream)
@@ -88,7 +88,7 @@ class Solution implements SolutionInterface
     }
 
     #[Override]
-    public function solve(string $inputStream, ?string $inputStream2 = null): SolutionResult
+    public function solve(string $inputStream, ?string $inputStream2 = null, ?bool $isTest = true): SolutionResult
     {
 
         [$operators, $columns] = static::parseData($inputStream);

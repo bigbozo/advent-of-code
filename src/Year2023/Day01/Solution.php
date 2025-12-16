@@ -2,12 +2,13 @@
 
 namespace Bizbozo\AdventOfCode\Year2023\Day01;
 
+use Bizbozo\AdventOfCode\Solutions\AbstractSolution;
 use Bizbozo\AdventOfCode\Solutions\SolutionInterface;
 use Bizbozo\AdventOfCode\Solutions\SolutionResult;
 use Bizbozo\AdventOfCode\Solutions\UnitResult;
 use Override;
 
-class Solution implements SolutionInterface
+class Solution extends AbstractSolution
 {
 
     private function parseData(string $stream)
